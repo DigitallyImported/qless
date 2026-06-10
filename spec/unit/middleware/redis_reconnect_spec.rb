@@ -32,7 +32,11 @@ module Qless
 
       def create_redis_connections(number, events)
         number.times.map do |i|
-          client = instance_double('Redis::Client')
+          # Use a plain double rather than a verifying double here: redis-rb
+          # >= 5.0 removed Redis::Client#reconnect, so instance_double would
+          # refuse to stub it. Qless.reconnect_redis prefers #reconnect when
+          # available (redis < 5.0) and we want to exercise that path.
+          client = double('Redis::Client')
           client.stub(:reconnect) { events << :"reconnect_#{i}" }
           instance_double('Redis', _client: client)
         end

@@ -159,9 +159,9 @@ module Qless
 
     # How many items in the queue?
     def length
-      (@client.redis.multi do
+      (@client.redis.multi do |multi|
         %w[ locks work scheduled depends ].each do |suffix|
-          @client.redis.zcard("ql:q:#{@name}-#{suffix}")
+          multi.zcard("ql:q:#{@name}-#{suffix}")
         end
       end).inject(0, :+)
     end

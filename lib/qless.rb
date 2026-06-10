@@ -45,7 +45,21 @@ module Qless
     @failure_formatter ||= FailureFormatter.new
   end
 
-  module_function :generate_jid, :stringify_hash_keys, :failure_formatter
+  # Reconnect a redis connection in a way that works across redis gem
+  # versions. On redis < 5.0 the underlying client exposed #reconnect; on
+  # redis >= 5.0 that was removed, so we disconnect instead and let the next
+  # command transparently reestablish the connection.
+  def reconnect_redis(redis)
+    client = redis._client
+    if client.respond_to?(:reconnect)
+      client.reconnect
+    else
+      redis.disconnect!
+    end
+  end
+
+  module_function :generate_jid, :stringify_hash_keys, :failure_formatter,
+                  :reconnect_redis
 
   # A class for interacting with jobs. Not meant to be instantiated directly,
   # it's accessed through Client#jobs

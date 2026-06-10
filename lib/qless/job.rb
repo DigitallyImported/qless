@@ -172,7 +172,7 @@ module Qless
     end
 
     def reconnect_to_redis
-      @client.redis._client.reconnect
+      Qless.reconnect_redis(@client.redis)
     end
 
     def history
