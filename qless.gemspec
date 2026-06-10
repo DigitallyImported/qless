@@ -24,25 +24,18 @@ language-specific extension will also remain up to date.
 
   s.rubyforge_project = 'qless'
 
-  s.files         = %w(README.md Gemfile Rakefile HISTORY.md)
+  s.files         = %w(README.md Gemfile Rakefile HISTORY.md config.ru)
   s.files        += Dir.glob('lib/**/*.rb')
   s.files        += Dir.glob('lib/qless/lua/*.lua')
   s.files        += Dir.glob('exe/**/*')
   s.files        += Dir.glob('lib/qless/server/**/*')
-  s.bindir        = 'exe'
-  s.executables   = ['qless-web', 'qless-config', 'qless-stats']
 
   s.test_files    = s.files.grep(/^(test|spec|features)\//)
   s.require_paths = ['lib']
 
   s.add_dependency 'erubi', '~> 1.7'
-  s.add_dependency 'metriks', '~> 0.9'
   s.add_dependency 'redis', ['>= 4.4', '< 6.0']
   s.add_dependency 'rusage', '~> 0.2.0'
   s.add_dependency 'sinatra', ['>= 1.3', '< 5.0']
-  s.add_dependency 'statsd-ruby', '~> 1.3'
-  s.add_dependency 'thin', '~> 1.7'
-  s.add_dependency 'thor'
-  s.add_dependency 'vegas', '~> 0.1.11'
 
 end

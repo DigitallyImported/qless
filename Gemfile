@@ -18,6 +18,5 @@ group :development do
   gem 'rspec-fire'
   gem 'rubocop'
   gem 'simplecov'
-  gem 'thin'
   gem 'timecop'
 end
